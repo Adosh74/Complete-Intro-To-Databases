@@ -16,7 +16,7 @@ docker run --name test-mongo -dit -p 27017:27017 mongo:4.4.1
 docker exec -it test-mongo mongo
 ```
 
-### Mongo shell commands
+### Mongo Shell Commands
 
 ```bash
 show dbs; # show all databases
@@ -170,4 +170,25 @@ Now we see that the execution stats are different and the stage 1 is FETCH which
 ```bash
 db.pets.getIndexes();
 # show all indexes in pets collection
+```
+
+### Full-text Search Indexes in MongoDB
+
+```bash
+db.pets.createIndex({ type: "text", breed: "text", name: "text" });
+# create a full-text search index on type, breed and name fields in pets collection
+```
+
+#### Querying Full-text Search Indexes
+
+```bash
+db.pets.find({ $text: { $search: "Havanes dog Luna"}});
+# find all documents in pets collection where the text contains Havanes, dog and Luna
+
+db.pets.find({ $text: { $search: "dog Havanese Luna"}}).sort({ score: { $meta: "textScore"}});
+# find all documents in pets collection where the text contains dog, Havanese and Luna and sort them by textScore
+
+db.pets.find({ $text: { $search: "dog Havanese Luna"}}, { score: { $meta: "textScore" } }).sort({ score: { $meta: "textScore"}});
+
+
 ```
