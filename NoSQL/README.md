@@ -192,3 +192,66 @@ db.pets.find({ $text: { $search: "dog Havanese Luna"}}, { score: { $meta: "textS
 
 
 ```
+
+### Aggregation in MongoDB
+
+```bash
+db.pets.aggregate([
+... {
+... $bucket: {
+...  groupBy: "$age",
+...  boundaries: [0, 3, 9, 15],
+...  default: "15+",
+...  output:{
+...   count: { $sum: 1 }
+...   }
+...  }
+... }
+... ]
+... );
+# bucket the documents in pets collection by age and count the number of documents in each bucket where the boundaries are 0, 3, 9 and 15 and the default bucket is 16+
+
+db.pets.aggregate([
+{
+... $match: {
+...    type: "dog"
+... }
+} ,
+{
+... $bucket: {
+...  groupBy: "$age",
+...  boundaries: [0, 3, 9, 15],
+...  default: "very senior",
+...  output:{
+...   count: { $sum: 1 }
+...   }
+...  }
+... }
+... ]
+... );
+# bucket the documents in pets collection where type is dog by age and count the number of documents in each bucket where the boundaries are 0, 3, 9 and 15 and the default bucket is very senior
+
+db.pets.aggregate([
+{
+... $match: {
+...    type: "dog"
+... }
+} ,
+{
+... $bucket: {
+...  groupBy: "$age",
+...  boundaries: [0, 3, 9, 15],
+...  default: "very senior",
+...  output:{
+...   count: { $sum: 1 }
+...   }
+...  }
+... },
+{
+    $sort: { count: -1}
+}
+... ]
+... );
+# bucket the documents in pets collection where type is dog by age and count the number of documents in each bucket where the boundaries are 0, 3, 9 and 15 and the default bucket is very senior and sort the result by count in descending order
+
+```
