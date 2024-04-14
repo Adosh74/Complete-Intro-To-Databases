@@ -1,0 +1,13 @@
+{
+  "name": "NoSQL",
+  "version": "1.0.0",
+  "description": "node and mongodb",
+  "main": "server.js",
+  "repository": "https://github.com/Adosh74/Coplete-Intro-To-Databases",
+  "author": "Mohamed Shebl",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "3.6.2"
+  }
+}
