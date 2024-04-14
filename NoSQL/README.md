@@ -145,5 +145,29 @@ db.pets.findOneAndDelete({name: "Fido", type: "reptile"});
 
 ### Indexing in MongoDB
 
+Indexes are special data structures that store a small portion of the collection’s data set in an easy-to-traverse form. The index stores the value of a specific field or set of fields, ordered by the value of the field. The ordering of the index entries supports efficient equality matches and range-based query operations. In addition, MongoDB can return sorted results by using the ordering in the index.
+
 ```bash
+db.pets.find({name: "Fido"}).explain("executionStats");
+# show the execution stats for the query where name is Fido.
+```
+
+now we see 9643 examined documents and only 1070 returned documents.
+And stage 1 is COLLSCAN which means that the query is scanning the entire collection to find the documents where name is Fido.
+
+```bash
+db.pets.createIndex({ name: 1 });
+# create an index on the name field in pets collection
+```
+
+```bash
+db.pets.find({name: "Fido"}).explain("executionStats");
+# show the execution stats for the query where name is Fido.
+```
+
+Now we see that the execution stats are different and the stage 1 is FETCH which means that the query is using the index to find the documents where name is Fido. And only 1070 documents are examined and returned.
+
+```bash
+db.pets.getIndexes();
+# show all indexes in pets collection
 ```
