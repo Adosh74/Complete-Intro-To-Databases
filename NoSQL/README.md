@@ -1,5 +1,27 @@
 # NoSQL
 
+## Table of Contents
+
+1. [Introduction](#introduction)
+
+2. [MongoDB](#mongodb)
+    1. [Installation](#installation)
+    2. [Connect to MongoDB](#connect-to-mongodb)
+    3. [Mongo Shell Commands](#mongo-shell-commands)
+    4. [Querying MongoDB](#querying-mongodb)
+    5. [MongoDB Logical Operators](#mongodb-logical-operators)
+    6. [Projection in MongoDB](#projection-in-mongodb)
+    7. [Update in MongoDB](#update-in-mongodb)
+    8. [Delete in MongoDB](#delete-in-mongodb)
+    9. [Indexing in MongoDB](#indexing-in-mongodb)
+    10. [Full-text Search Indexes in MongoDB](#full-text-search-indexes-in-mongodb)
+        1. [Querying Full-text Search Indexes](#querying-full-text-search-indexes)
+    11. [Aggregation in MongoDB](#aggregation-in-mongodb)
+
+## Introduction
+
+NoSQL databases provide a mechanism for storage and retrieval of data that is modeled in means other than the tabular relations used in relational databases. NoSQL databases are increasingly used in big data and real-time web applications. NoSQL systems are also sometimes called "Not only SQL" to emphasize that they may support SQL-like query languages or sit alongside SQL databases in polyglot-persistent architectures.
+
 ## MongoDB
 
 mongodb is a document-oriented NoSQL database used for high volume data storage. Instead of using tables and rows as in the traditional relational databases, MongoDB makes use of collections and documents. Documents consist of key-value pairs which are the basic unit of data in MongoDB. Collections contain sets of documents and function which is the equivalent of relational database tables.
