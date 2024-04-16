@@ -90,24 +90,34 @@ SELECT * FROM users LIMIT 2;
 SELECT * FROM users WHERE user_id = 500;
 -- select all columns from the users table where the user_id is 500
 
-SELECT username, email, full_name FROM users WHERE last_login IS NULL LIMIT 10;
--- select the username, email, and full_name columns from the users table where the last_login is null and limit the result to 10 rows
+SELECT username, email, full_name FROM users 
+WHERE last_login IS NULL LIMIT 10;
+-- select the username, email, and full_name columns from the users table 
+-- where the last_login is null and limit the result to 10 rows
 
-SELECT user_id, username, email, created_on, last_login FROM users WHERE last_login IS NULL AND created_on < now() - interval '6 months' LIMIT 10;
--- select the user_id, username, email, created_on, and last_login columns from the users table where user never logged in and created the account more than 6 months ago and limit the result to 10 rows
+SELECT user_id, username, email, created_on, last_login FROM users 
+WHERE last_login IS NULL AND created_on < now() - interval '6 months' LIMIT 10;
+-- select the user_id, username, email, created_on, and last_login columns from the users table 
+-- where user never logged in and created the account more than 6 months ago and limit the result to 10 rows
 ```
 
 #### Order By
 
 ```sql
-SELECT user_id, email, created_on FROM users ORDER BY created_on LIMIT 10;
--- select the user_id, email, and created_on columns from the users table and order the result by the created_on column and limit the result to 10 rows
+SELECT user_id, email, created_on FROM users 
+ORDER BY created_on LIMIT 10;
+-- select the user_id, email, and created_on columns from the users table 
+-- and order the result by the created_on column and limit the result to 10 rows
 
-SELECT user_id, email, created_on FROM users ORDER BY created_on DESC LIMIT 10;
--- select the user_id, email, and created_on columns from the users table and order the result by the created_on column in descending order and limit the result to 10 rows
+SELECT user_id, email, created_on FROM users 
+ORDER BY created_on DESC LIMIT 10;
+-- select the user_id, email, and created_on columns from the users table 
+-- and order the result by the created_on column in descending order and limit the result to 10 rows
 
-SELECT user_id, email, created_on FROM users ORDER BY created_on ASC LIMIT 10;
--- select the user_id, email, and created_on columns from the users table and order the result by the created_on column in ascending order and limit the result to 10 rows
+SELECT user_id, email, created_on FROM users 
+ORDER BY created_on ASC LIMIT 10;
+-- select the user_id, email, and created_on columns from the users table 
+-- and order the result by the created_on column in ascending order and limit the result to 10 rows
 ```
 
 #### Count
@@ -124,7 +134,8 @@ SELECT count(last_login) FROM users;
 
 ```sql
 UPDATE users SET last_login = now() WHERE user_id = 1 RETURNING *;
--- update the last_login column for the user with user_id 1 to the current timestamp (now) and return the updated row
+-- update the last_login column for the user 
+-- with user_id 1 to the current timestamp (now) and return the updated row
 ```
 
 #### Delete Data in PostgreSQL
