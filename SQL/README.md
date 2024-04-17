@@ -144,3 +144,44 @@ UPDATE users SET last_login = now() WHERE user_id = 1 RETURNING *;
 DELETE FROM users WHERE user_id = 100 RETURNING *;
 -- delete the user with user_id 100 and return the deleted row
 ```
+
+### Foreign Keys
+
+Foreign keys are used to link two tables together. A foreign key is a column or a group of columns in a table that reference the primary key of another table.
+
+Recap our tables:
+
+```sql
+CREATE TABLE users (
+  user_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  username VARCHAR ( 25 ) UNIQUE NOT NULL,
+  email VARCHAR ( 50 ) UNIQUE NOT NULL,
+  full_name VARCHAR ( 100 ) NOT NULL,
+  last_login TIMESTAMP,
+  created_on TIMESTAMP NOT NULL
+);
+
+CREATE TABLE boards (
+  board_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  board_name VARCHAR ( 50 ) UNIQUE NOT NULL,
+  board_description TEXT NOT NULL
+);
+
+CREATE TABLE comments (
+  comment_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+  board_id INT REFERENCES boards(board_id) ON DELETE CASCADE,
+  comment TEXT NOT NULL,
+  time TIMESTAMP
+);
+-- user_id and board_id are foreign keys that reference the user_id and board_id columns in the users and boards tables respectively
+-- ON DELETE CASCADE means if a user or a board is deleted, all comments related to this user or board will be deleted
+
+
+CREATE TABLE rich_content (
+  content_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  comment_id INT REFERENCES comments(comment_id) ON DELETE CASCADE,
+  content JSONB NOT NULL
+);
+-- comment_id is a foreign key that references the comment_id column in the comments table
+```
