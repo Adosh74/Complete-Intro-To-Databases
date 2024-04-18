@@ -227,3 +227,34 @@ WHERE user_id = (SELECT user_id FROM users WHERE full_name = 'Maynord Simonich')
 -- from the comments table 
 -- when the user_id is equal to the user_id of the user with full_name 'Maynord Simonich'
 ```
+
+### Group By
+
+Group By is used to group rows that have the same values into summary rows. It is often used with aggregate functions like COUNT, SUM, AVG, MAX, and MIN.
+
+```sql
+SELECT boards.board_name, COUNT(*) AS comment_count 
+FROM comments NATURAL INNER JOIN boards 
+GROUP BY boards.board_name 
+ORDER BY comment_count DESC LIMIT 10;
+-- get the board_name and the number of comments for each board
+-- by joining the comments and boards tables 
+-- and grouping the result by the board_name
+-- and ordering the result by the comment_count in descending order 
+-- and limiting the result to 10 rows
+-- **NATURAL INNER JOIN** is used to join two tables based on the columns with the same name
+```
+
+That can case an error if board has no comments, so we can use LEFT JOIN instead of INNER JOIN. or count the comment_id instead of using count(*).
+
+```sql
+SELECT boards.board_name, COUNT(*) AS comment_count 
+FROM comments LEFT JOIN boards ON comments.board_id = boards.board_id 
+GROUP BY boards.board_name 
+ORDER BY comment_count DESC LIMIT 10;
+
+SELECT boards.board_name, COUNT(comment_id) AS comment_count
+FROM comments LEFT JOIN boards ON comments.board_id = boards.board_id
+GROUP BY boards.board_name
+ORDER BY comment_count DESC LIMIT 10;
+```
