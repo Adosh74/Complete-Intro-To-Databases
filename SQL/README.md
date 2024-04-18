@@ -214,5 +214,16 @@ WHERE board_id = 39;
 -- from the comments table and the users table 
 -- where the user_id in the comments table is equal to the user_id in the users table
 -- and the board_id is 39
+```
 
+### SubQueries
+
+SubQueries are queries that are nested inside another query. SubQueries can be used in SELECT, INSERT, UPDATE, and DELETE statements.
+
+```sql
+SELECT comment_id, user_id, LEFT(comment, 20) FROM comments 
+WHERE user_id = (SELECT user_id FROM users WHERE full_name = 'Maynord Simonich');
+-- get the comment_id, user_id, and the first 20 characters of the comment column
+-- from the comments table 
+-- when the user_id is equal to the user_id of the user with full_name 'Maynord Simonich'
 ```
