@@ -24,6 +24,7 @@ docker exec -it -u postgres my-postgres psql
 \l -- List all databases
 \c database_name -- Connect to a database
 \dt -- List all tables
+\d -- List all tables 
 \d table_name -- Describe a table
 \? -- List all commands available in the shell
 \h -- List all SQL commands can be used in the shell 
@@ -184,4 +185,34 @@ CREATE TABLE rich_content (
   content JSONB NOT NULL
 );
 -- comment_id is a foreign key that references the comment_id column in the comments table
+```
+
+### Join Tables
+
+Join tables are used to combine rows from two or more tables based on a related column between them. There are different types of joins in SQL: INNER JOIN, LEFT JOIN, RIGHT JOIN, and FULL JOIN.
+
+**INNER JOIN** returns rows when there is at least one match in both tables.
+**LEFT JOIN** returns all rows from the left table and the matched rows from the right table.
+**RIGHT JOIN** returns all rows from the right table and the matched rows from the left table.
+**FULL JOIN** returns rows when there is a match in one of the tables.
+
+```sql
+-- recap our knowledge 
+SELECT comment_id, user_id, LEFT(comment, 20) AS preview 
+from comments WHERE board_id = 39;
+-- select the comment_id, user_id, 
+--and the first 20 characters of the comment column as preview.
+-- *LEFT* is a function that returns the leftmost characters of a string
+-- *AS* is used to rename the column in the result. (alias)
+
+------------ INNER JOIN ------------
+SELECT comment_id, comments.user_id, users.username, LEFT(comment, 20) 
+FROM comments INNER JOIN users ON comments.user_id = users.user_id 
+WHERE board_id = 39;
+-- select the comment_id, user_id from comments table, username from users table,
+-- and the first 20 characters of the comment column as preview
+-- from the comments table and the users table 
+-- where the user_id in the comments table is equal to the user_id in the users table
+-- and the board_id is 39
+
 ```
