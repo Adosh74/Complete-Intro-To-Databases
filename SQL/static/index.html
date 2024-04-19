@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL PostgreSQL</title>
+</head>
+<body>
+    <input type="text" placeholder="Board ID" id="Search">
+    <button id="btn">Search</button>
+    <pre>
+        <code id="code">
+
+        </code>
+    </pre>
+
+    <script>
+        const btn = document.getElementById('btn');
+        const Search = document.getElementById('Search');
+        const code = document.getElementById('code');
+
+        btn.addEventListener('click', async () => {
+            code.innerHTML = 'Loading...';
+
+            const search = Search.value;
+            const response = await fetch(`/get?search=${search}`);
+            const data = await response.json();
+            code.innerHTML = `\n${JSON.stringify(data, null, 4)}`;
+        });
+    </script>
+</body>
+</html>
