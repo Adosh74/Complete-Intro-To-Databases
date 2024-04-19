@@ -258,3 +258,48 @@ FROM comments LEFT JOIN boards ON comments.board_id = boards.board_id
 GROUP BY boards.board_name
 ORDER BY comment_count DESC LIMIT 10;
 ```
+
+### Json in PostgreSQL
+
+```sql
+CREATE TABLE rich_content (
+  content_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  comment_id INT REFERENCES comments(comment_id) ON DELETE CASCADE,
+  content JSON NOT NULL
+  -- content **json** type is used to store JSON data in the column
+);
+```
+
+```sql
+CREATE TABLE rich_content (
+  content_id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  comment_id INT REFERENCES comments(comment_id) ON DELETE CASCADE,
+  content JSONB NOT NULL
+  -- content **jsonb** is binary JSON that is more efficient than JSON
+);
+```
+
+```sql
+SELECT content -> 'type' AS content_type FROM rich_content;
+-- get the value of the type key 
+-- and alias it as content_type from the content column in the rich_content table
+```
+
+```sql
+SELECT DISTINCT content -> 'type' from rich_content;
+-- get the distinct values of the type key from the content column in the rich_content table
+
+-- or
+SELECT DISTINCT CAST(content -> 'type' AS TEXT) FROM rich_content;
+-- cast the value of the type key to text and get the distinct values
+
+-- or
+SELECT DISTINCT content ->> 'type' from rich_content;
+-- **->>** is used to get the value of the key as text
+```
+
+```sql
+SELECT content -> 'dimensions' ->> 'height' AS height, content -> 'dimensions' ->> 'width' AS width FROM rich_content WHERE content -> 'dimensions' IS NOT NULL;
+-- get the height and width values from the dimensions object in the content column
+-- when the dimensions object is not null
+```
