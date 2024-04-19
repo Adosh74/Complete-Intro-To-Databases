@@ -303,3 +303,35 @@ SELECT content -> 'dimensions' ->> 'height' AS height, content -> 'dimensions' -
 -- get the height and width values from the dimensions object in the content column
 -- when the dimensions object is not null
 ```
+
+### Indexes in PostgreSQL
+
+Indexes are used to speed up the retrieval of rows from a table. Indexes are created on columns in a table. There are different types of indexes in PostgreSQL: B-tree, Hash, GiST, SP-GiST, GIN, and BRIN.
+
+```sql
+EXPLAIN SELECT comment_id, user_id, time, LEFT(comment, 20) 
+FROM comments WHERE board_id = 39 ORDER BY time LIMIT 50;
+-- get the execution plan of the query to select the comment_id, user_id, time, and the first 20 characters of the comment column
+```
+
+- **output**
+
+![before index](./../images///sql_output_explain.png)
+
+- **Create Index**
+
+```sql
+CREATE INDEX ON comments (board_id);
+-- create an index on the board_id column in the comments table
+```
+
+- **output**
+
+![after index](./../images//output_after_index.png)
+
+now the query will be see the cost of the query is reduced.
+
+```sql
+CREATE UNIQUE INDEX username_indx ON users(username);
+-- create a unique index on the username column in the users table
+```
